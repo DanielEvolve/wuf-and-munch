@@ -1,124 +1,156 @@
-// Le decimos al navegador: "Espera a que todo el HTML esté cargado antes de ejecutar este código"
 document.addEventListener('DOMContentLoaded', function() {
     
-    // --- Lógica para el año actual en el footer (la movimos aquí antes) ---
+    // 1. CARGAR EL CARRITO (El "Almacén" persistente)
+    // Intentamos leer la "libreta" (localStorage). Si está vacía, empezamos con []
+    let cart = JSON.parse(localStorage.getItem('wufCart')) || [];
+
     const yearElement = document.getElementById('currentYear');
-    if (yearElement) {
-        yearElement.textContent = new Date().getFullYear();
-    }
+    if (yearElement) yearElement.textContent = new Date().getFullYear();
 
-    // --- CÓDIGO DEL CARRITO DE COMPRAS ---
-
-    // 1. Carrito virtual y selección de elementos del DOM
-    //    Ahora esta búsqueda se hace DESPUÉS de que el HTML está listo.
-    const cart = [];
     const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
     const cartCountElement = document.getElementById('cart-count');
     const checkoutSection = document.getElementById('checkout-section');
     const cartSummaryElement = document.getElementById('cart-summary');
 
-    // 2. Añadir un "escuchador" de clics a cada botón
+    // Ejecutamos la vista apenas carga la página para recuperar lo que había
+    updateCartView();
+
+    // 2. AÑADIR AL CARRITO
     addToCartButtons.forEach(button => {
         button.addEventListener('click', () => {
             const productCard = button.closest('.product-card');
             
-            const productId = productCard.dataset.productId;
-            const productName = productCard.dataset.productName;
-            const productPrice = parseFloat(productCard.dataset.productPrice);
-
             const product = {
-                id: productId,
-                name: productName,
-                price: productPrice
+                id: productCard.dataset.productId,
+                name: productCard.dataset.productName,
+                price: parseFloat(productCard.dataset.productPrice)
             };
             
             cart.push(product);
-
-            // ¡Ahora este console.log debería funcionar!
-            console.log('Carrito actualizado:', cart);
-            
+            saveCart();
             updateCartView();
+
+            // --- EFECTO VISUAL ---
+            const originalText = button.innerHTML;
+            button.innerHTML = '¡Añadido! 🐾'; // Mensaje amigable
+            button.classList.replace('btn-dark', 'btn-success'); // Cambia a verde éxito
+            button.disabled = true; // Evita clics dobles accidentales
+
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.replace('btn-success', 'btn-dark');
+                button.disabled = false;
+            }, 1200); // Regresa a la normalidad tras 1.2 segundos
         });
     });
 
-    // 3. Función para actualizar la vista del carrito
-// 3. Función para actualizar la vista del carrito
+    // 3. FUNCIÓN PARA GUARDAR (La clave del éxito)
+    function saveCart() {
+        // Convertimos el array a Texto (JSON) porque el localStorage solo guarda texto
+        localStorage.setItem('wufCart', JSON.stringify(cart));
+    }
+
+    // 4. ACTUALIZAR LA VISTA
     function updateCartView() {
-        // Verificación para evitar errores en otras páginas que no tienen estos elementos
-        if (!cartCountElement || !checkoutSection || !cartSummaryElement) {
-            return; 
+        if (cartCountElement) {
+            cartCountElement.textContent = cart.length;
         }
 
-        // Actualiza el contador en la barra de navegación
-        cartCountElement.textContent = cart.length;
+        const section = document.getElementById('checkout-section');
+        const summary = document.getElementById('cart-summary');
 
-        // Limpia el resumen anterior para no duplicar productos en la vista
-        cartSummaryElement.innerHTML = '';
+        if (!section || !summary) return;
 
-        // Muestra u oculta la sección de checkout y genera el resumen
+        summary.innerHTML = ''; // Limpiamos
+
         if (cart.length > 0) {
-            checkoutSection.classList.remove('d-none'); // Muestra la sección
-            
-            let totalPrice = 0; // Variable para calcular el precio total
-            
-            // Crea y añade cada producto del carrito al resumen
-            cart.forEach(product => {
-                // Creamos un nuevo elemento de párrafo <p> para cada producto
-                const productElement = document.createElement('p');
-                productElement.className = 'cart-item-summary'; // Le damos una clase por si queremos darle estilo después
+            section.classList.remove('d-none');
+            let total = 0;
+            const counts = {};
 
-                // Le ponemos el texto. Ej: "Gelatina de Pollo - $50.00 MXN"
-                productElement.textContent = `${product.name} - $${product.price.toFixed(2)} MXN`;
+            // Agrupamos con una validación de seguridad
+            cart.forEach(item => {
+                const name = item.name || "Producto sin nombre";
+                const price = item.price || 0;
                 
-                // Añadimos el nuevo elemento de párrafo al div de resumen del carrito
-                cartSummaryElement.appendChild(productElement);
-                
-                // Sumamos el precio de este producto al total
-                totalPrice += product.price;
+                if (!counts[name]) {
+                    counts[name] = { price: price, qty: 0 };
+                }
+                counts[name].qty++;
             });
-            
-            // Añadimos el precio total al final del resumen
-            const totalElement = document.createElement('h5'); // Usamos un <h5> para que resalte
-            totalElement.className = 'mt-4'; // Añade un margen superior para separarlo de la lista
-            totalElement.textContent = `Total: $${totalPrice.toFixed(2)} MXN`; // Mostramos el total
-            cartSummaryElement.appendChild(totalElement);
+
+            // Creamos el HTML del resumen
+            for (const name in counts) {
+                const p = counts[name];
+                const subtotal = p.price * p.qty;
+                total += subtotal;
+
+                const row = document.createElement('div');
+                // Usamos clases de Bootstrap básicas para asegurar que se vea
+                row.className = 'd-flex justify-content-between align-items-center p-3 mb-2 bg-white rounded shadow-sm border';
+                row.innerHTML = `
+                    <div class="text-start">
+                        <span class="fw-bold">${p.qty}x ${name}</span>
+                    </div>
+                    <div class="text-end">
+                        <span class="text-success fw-bold">$${subtotal.toFixed(2)}</span>
+                        <button class="btn btn-sm btn-link text-danger ms-2" onclick="removeOne('${name}')">Eliminar</button>
+                    </div>
+                `;
+                summary.appendChild(row);
+            }
+
+            const totalRow = document.createElement('div');
+            totalRow.className = 'mt-4 p-3 bg-light rounded';
+            totalRow.innerHTML = `<h3 class="fw-bold mb-0">Total: $${total.toFixed(2)} MXN</h3>`;
+            summary.appendChild(totalRow);
 
         } else {
-            // Si el carrito está vacío, oculta la sección de checkout
-            checkoutSection.classList.add('d-none');
+            section.classList.add('d-none');
+        }
+        if (cart.length === 1) {
+            document.getElementById('checkout-section').scrollIntoView({ behavior: 'smooth' });
         }
     }
-    const sendWhatsappBtn = document.getElementById('send-whatsapp-btn');
 
-    // Añadimos un "escuchador" de clics al botón
+    // Nueva función para quitar de uno en uno
+    window.removeOne = function(productName) {
+        const index = cart.findLastIndex(p => p.name === productName);
+        if (index !== -1) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartView();
+        }
+    };
+
+    // 5. FUNCIÓN PARA ELIMINAR (Para que el usuario pueda arrepentirse)
+    window.removeItem = function(index) {
+        cart.splice(index, 1); // Quita el elemento del array
+        saveCart();            // Guarda la nueva lista
+        updateCartView();      // Actualiza la pantalla
+    };
+
+    // 6. WHATSAPP (Se mantiene igual, pero usa el cart actualizado)
+    const sendWhatsappBtn = document.getElementById('send-whatsapp-btn');
     if (sendWhatsappBtn) {
         sendWhatsappBtn.addEventListener('click', () => {
-            // Preparamos el mensaje de texto inicial
-            let message = '¡Hola Wuf & Munch! 🐾 Me gustaría cotizar los siguientes productos:\n\n';
-            let totalPrice = 0;
+            let message = '¡Hola Wuf & Munch! 🐾 Me gustaría pedir estos snacks:\n\n';
+            let total = 0;
+            const counts = {};
 
-            // Recorremos el carrito para añadir cada producto al mensaje
-            cart.forEach(product => {
-                message += `- ${product.name} ($${product.price.toFixed(2)})\n`; // \n es un salto de línea
-                totalPrice += product.price;
+            cart.forEach(item => {
+                counts[item.name] = (counts[item.name] || 0) + 1;
             });
 
-            // Añadimos el total al final del mensaje
-            message += `\n*Total (aproximado): $${totalPrice.toFixed(2)} MXN*\n\n`;
-            message += 'Quedo a la espera de mi cotización. ¡Gracias!';
+            for (const name in counts) {
+                message += `* ${counts[name]}x ${name}\n`;
+            }
 
-            // Codificamos el mensaje para que sea seguro de usar en una URL
-            const encodedMessage = encodeURIComponent(message);
+            // Calculamos el total para el mensaje
+            cart.forEach(item => total += item.price);
+            message += `\n*Total: $${total.toFixed(2)} MXN*`;
             
-            // Reemplaza este número con el teléfono de Wuf & Munch (con código de país, sin + ni espacios)
-            const phoneNumber = '523325131513'; 
-
-            // Creamos la URL final para WhatsApp
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-            // Abrimos WhatsApp en una nueva pestaña del navegador
-            window.open(whatsappURL, '_blank');
+            window.open(`https://wa.me/523325131513?text=${encodeURIComponent(message)}`, '_blank');
         });
     }
-
 });

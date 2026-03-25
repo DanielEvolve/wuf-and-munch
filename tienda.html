@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 
@@ -22,15 +23,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="cart-button">
-                            🛒 Carrito (<span id="cart-count">0</span>)
-                        </a>
-                    </li>                    
+                    <li class="nav-item"><a class="nav-link fw-bold" href="tienda.html#checkout-section" id="cart-button">🛒 <span id="cart-text">Carrito</span> (<span id="cart-count">0</span>)</a></li>                   
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link active" href="tienda.html">Tienda</a></li>
                     <li class="nav-item"><a class="nav-link" href="nosotros.html">Nuestra Tropa</a></li>
                     <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                    
                 </ul>
             </div>
         </div>
@@ -38,71 +36,63 @@
 
     <main class="py-5">
         <div class="container">
-            <h1 class="text-center mb-4">¡El Festín de la Tropa ha Llegado!</h1>
+            <div class="text-center mb-5">
+                <span class="badge-premium mb-2 d-inline-block" style="background: var(--clr-gris-suave); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: var(--clr-naranja-wm);">Menú de Temporada</span>
+                <h1 class="display-4 fw-bold">¡El Festín de la Tropa!</h1>
+                <p class="text-muted">Selección artesanal de snacks monoproteicos y naturales.</p>
+            </div>
+
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <div class="col">
-                    <div class="card product-card" data-product-id="1" data-product-name="Galletas de avena" data-product-price="45.00">
-                        <img src="img/galletasAvena.png" class="card-img-top" alt="Nombre del Producto">
-                        <div class="card-body">
-                            <h5 class="card-title">Galletas de avena</h5>
-                            <p class="card-text">Breve descripción atractiva del producto (máximo 2-3 líneas).</p>
-                            <p class="card-text"><small class="text-muted">Precio: $45.00 MXN</small></p>
-                            <button class="btn btn-primary btn-sm add-to-cart-btn">Añadir al Carrito</button>
+                    <div class="card product-card border-0 h-100 p-3" 
+                        data-product-id="1" data-product-name="Galletas de Avena" data-product-price="45.00"
+                        style="background: var(--clr-gris-suave); border-radius: 28px;">
+                        <div class="img-wrapper mb-3" style="border-radius: 20px; overflow: hidden; background: white;">
+                            <img src="img/galletasAvena.png" class="card-img-top p-2" alt="Galletas de Avena">
+                        </div>
+                        <div class="card-body p-2 d-flex flex-column">
+                            <h5 class="card-title fw-bold mb-2">Galletas de Avena</h5>
+                            <p class="card-text text-muted small flex-grow-1">Crujientes, digestivas y llenas de fibra natural.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fw-bold h5 mb-0">$45.00</span>
+                                <button class="btn btn-dark rounded-pill px-3 py-2 add-to-cart-btn">+ Añadir</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col">
-                    <div class="card product-card" data-product-id="1" data-product-name="Patas de pollo deshidratadas" data-product-price="120.00">
-                        <img src="img/PatasPollo.png" class="card-img-top" alt="Nombre del Producto">
-                        <div class="card-body">
-                            <h5 class="card-title">Patas de pollo deshidratadas</h5>
-                            <p class="card-text">Breve descripción atractiva del producto (máximo 2-3 líneas).</p>
-                            <p class="card-text"><small class="text-muted">Precio: $120.00 MXN</small></p>
-                            <button class="btn btn-primary btn-sm add-to-cart-btn">Añadir al Carrito</button>
+                    <div class="card product-card border-0 h-100 p-3" 
+                        data-product-id="2" data-product-name="Patas de Pollo" data-product-price="120.00"
+                        style="background: var(--clr-gris-suave); border-radius: 28px;">
+                        <div class="img-wrapper mb-3" style="border-radius: 20px; overflow: hidden; background: white;">
+                            <img src="img/PatasPollo.png" class="card-img-top p-2" alt="Patas de Pollo">
+                        </div>
+                        <div class="card-body p-2 d-flex flex-column">
+                            <h5 class="card-title fw-bold mb-2">Patas de Pollo</h5>
+                            <p class="card-text text-muted small flex-grow-1">Deshidratadas a baja temperatura para mantener el colágeno.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fw-bold h5 mb-0">$120.00</span>
+                                <button class="btn btn-dark rounded-pill px-3 py-2 add-to-cart-btn">+ Añadir</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col">
-                    <div class="card product-card" data-product-id="1" data-product-name="Cecina de res" data-product-price="120.00">
-                        <img src="img/Cecina.png" class="card-img-top" alt="Nombre del Producto">
-                        <div class="card-body">
-                            <h5 class="card-title">Cecina de res</h5>
-                            <p class="card-text">Breve descripción atractiva del producto (máximo 2-3 líneas).</p>
-                            <p class="card-text"><small class="text-muted">Precio: $120.00 MXN</small></p>
-                            <button class="btn btn-primary btn-sm add-to-cart-btn">Añadir al Carrito</button>
+                    <div class="card product-card border-0 h-100 p-3" 
+                        data-product-id="3" data-product-name="Cecina de Res" data-product-price="120.00"
+                        style="background: var(--clr-gris-suave); border-radius: 28px;">
+                        <div class="img-wrapper mb-3" style="border-radius: 20px; overflow: hidden; background: white;">
+                            <img src="img/Cecina.png" class="card-img-top p-2" alt="Cecina de Res">
                         </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card product-card" data-product-id="1" data-product-name="Gelatina de Pollo" data-product-price="60.00">
-                        <img src="img/GelatinaPollo.png" class="card-img-top" alt="Nombre del Producto">
-                        <div class="card-body">
-                            <h5 class="card-title">Gelatina de pollo</h5>
-                            <p class="card-text">Breve descripción atractiva del producto (máximo 2-3 líneas).</p>
-                            <p class="card-text"><small class="text-muted">Precio: $60.00 MXN</small></p>
-                            <button class="btn btn-primary btn-sm add-to-cart-btn">Añadir al Carrito</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card product-card" data-product-id="1" data-product-name="Verduras deshidratadas" data-product-price="50.00">
-                        <img src="img/Zanahoria.png" class="card-img-top" alt="Nombre del Producto">
-                        <div class="card-body">
-                            <h5 class="card-title">Verduras deshidratadas</h5>
-                            <p class="card-text">Breve descripción atractiva del producto (máximo 2-3 líneas).</p>
-                            <p class="card-text"><small class="text-muted">Precio: $50.00 MXN</small></p>
-                            <button class="btn btn-primary btn-sm add-to-cart-btn">Añadir al Carrito</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card product-card" data-product-id="1" data-product-name="Hielos de pollo" data-product-price="25.00">
-                        <img src="img/HielosPollo.png" class="card-img-top" alt="Nombre del Producto">
-                        <div class="card-body">
-                            <h5 class="card-title">Hielos de pollo</h5>
-                            <p class="card-text">Breve descripción atractiva del producto (máximo 2-3 líneas).</p>
-                            <p class="card-text"><small class="text-muted">Precio: $25.00 MXN</small></p>
-                            <button class="btn btn-primary btn-sm add-to-cart-btn">Añadir al Carrito</button>
+                        <div class="card-body p-2 d-flex flex-column">
+                            <h5 class="card-title fw-bold mb-2">Cecina de Res</h5>
+                            <p class="card-text text-muted small flex-grow-1">100% carne de res magra. Proteína pura sin rellenos.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fw-bold h5 mb-0">$120.00</span>
+                                <button class="btn btn-dark rounded-pill px-3 py-2 add-to-cart-btn">+ Añadir</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -121,14 +111,34 @@
         </div>
     </section>
 
-    <footer class="py-4 text-center">
+    <footer class="py-5 text-center">
         <div class="container">
-            <p>&copy; <span id="currentYear"></span> Wuf & Munch. La Tropa Canina.</p>
+            <div class="mb-4">
+                <a href="https://www.instagram.com/tu_usuario" target="_blank" class="text-dark mx-3 fs-3 transition-icon">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@tu_usuario" target="_blank" class="text-dark mx-3 fs-3 transition-icon">
+                    <i class="bi bi-tiktok"></i>
+                </a>
+            </div>
+            
+            <hr class="w-25 mx-auto mb-4 opacity-10">
+            
+            <p class="text-muted small mb-0">
+                &copy; <span id="currentYear"></span> Wuf & Munch - La Tropa Canina.
+            </p>
+            <p class="text-muted x-small">Zapopan, Jalisco, México 🐾</p>
         </div>
     </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+
+    <a href="https://wa.me/523325131513?text=¡Hola!%20Tengo%20una%20duda%20sobre%20los%20snacks%20de%20Wuf%20%26%20Munch%20🐾" 
+        class="whatsapp-float" 
+        target="_blank">
+        <i class="bi bi-whatsapp"></i>
+    </a>
 
 </body>
 </html>

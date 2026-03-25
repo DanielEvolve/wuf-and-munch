@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 
@@ -20,6 +21,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link fw-bold" href="tienda.html#checkout-section" id="cart-button">🛒 <span id="cart-text">Carrito</span> (<span id="cart-count">0</span>)</a></li>
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="tienda.html">Tienda</a></li>
                     <li class="nav-item"><a class="nav-link active" href="nosotros.html">Nuestra Tropa</a></li>
@@ -31,40 +33,87 @@
 
     <main class="py-5">
         <div class="container">
-            <div class="text-center mb-5">
-                <h1 class="display-4">Somos Amantes de los Perros, como Tú</h1>
-                <p class="lead">Conoce la historia y la pasión detrás de cada snack de Wuf & Munch.</p>
+            <div class="text-center mb-5 pb-4">
+                <span class="badge-premium mb-3 d-inline-block" style="background: var(--clr-gris-suave); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: var(--clr-verde-wm);">Nuestra Misión</span>
+                <h1 class="display-4 fw-bold">Amor en cada mordida</h1>
+                <p class="lead text-muted mx-auto" style="max-width: 700px;">En Wuf & Munch, no solo hacemos premios; creamos momentos de felicidad saludable para tu mejor amigo.</p>
             </div>
 
-            <div class="row align-items-center">
-                <div class="col-md-6 mb-4 mb-md-0">
-                    <h2>Nuestra Historia</h2>
-                    <p>Wuf & Munch nació de una idea simple: si consideramos a nuestros perros parte de la familia, ¿por qué no darles snacks con la misma calidad y amor que nuestra propia comida? Cansados de premios llenos de ingredientes impronunciables, decidimos crear nuestros propios snacks 100% naturales, saludables y deliciosamente aprobados por la tropa canina más exigente.</p>
+            <div class="row align-items-center mb-5 pb-lg-5">
+                <div class="col-md-6 pe-lg-5">
+                    <h2 class="fw-bold mb-4">¿Cómo empezamos?</h2>
+                    <p class="text-secondary mb-4">
+                        Wuf & Munch nació de una observación simple: nuestros perros merecen comida real. Como dueños, nos frustraba encontrar premios llenos de conservadores y colorantes artificiales que no aportaban nada a su salud.
+                    </p>
+                    <p class="text-secondary">
+                        Decidimos volver a lo básico. Empezamos en nuestra propia cocina, seleccionando ingredientes de grado humano para crear snacks que nosotros mismos comeríamos. Lo que empezó como un regalo para nuestra "tropa" canina, hoy es nuestra pasión compartida contigo.
+                    </p>
                 </div>
                 <div class="col-md-6">
-                    <img src="img/historia.png" class="img-fluid rounded" alt="Perro feliz disfrutando un snack">
+                    <div class="img-wrapper shadow-sm" style="border-radius: 24px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
+                        <img src="img/historia.png" class="img-fluid" alt="Nuestra historia Wuf & Munch">
+                    </div>
                 </div>
             </div>
 
-            <hr class="my-5">
-
-            <div class="row align-items-center">
-                <div class="col-md-6 order-md-2 mb-4 mb-md-0">
-                    <h2>Nuestra Filosofía</h2>
-                    <p>Creemos en tres pilares: <b>Ingredientes Reales</b>, <b>Procesos Artesanales</b> y <b>Felicidad Máxima</b>. Solo usamos ingredientes que tú mismo podrías comer. Cada snack se prepara en pequeños lotes con cuidado y dedicación, asegurando que cada mordida no solo sea deliciosa, sino también nutritiva y segura para tu mejor amigo.</p>
+            <div class="row align-items-center pt-lg-5">
+                <div class="col-md-6 order-md-2 ps-lg-5">
+                    <h2 class="fw-bold mb-4">Nuestro Compromiso</h2>
+                    <p class="text-secondary mb-4">
+                        Cada snack que sale de nuestro taller ha sido preparado con un estándar de calidad artesanal. No usamos máquinas industriales masivas; preferimos el cuidado del trabajo a mano.
+                    </p>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Monoproteicos:</strong> Ideal para perros con alergias o estómagos sensibles.
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Deshidratación Lenta:</strong> Conservamos todos los nutrientes y el sabor original.
+                        </li>
+                        <li>
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Sin Atajos:</strong> Sin sal, sin azúcar y sin harinas añadidas.
+                        </li>
+                    </ul>
                 </div>
                 <div class="col-md-6 order-md-1">
-                     <img src="img/filosofia.png" class="img-fluid rounded" alt="Ingredientes naturales para snacks de perro">
+                    <div class="img-wrapper shadow-sm" style="border-radius: 24px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
+                        <img src="img/filosofia.png" class="img-fluid" alt="Proceso artesanal">
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="py-4 text-center">
-        </footer>
+    <footer class="py-5 text-center">
+        <div class="container">
+            <div class="mb-4">
+                <a href="https://www.instagram.com/tu_usuario" target="_blank" class="text-dark mx-3 fs-3 transition-icon">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@tu_usuario" target="_blank" class="text-dark mx-3 fs-3 transition-icon">
+                    <i class="bi bi-tiktok"></i>
+                </a>
+            </div>
+            
+            <hr class="w-25 mx-auto mb-4 opacity-10">
+            
+            <p class="text-muted small mb-0">
+                &copy; <span id="currentYear"></span> Wuf & Munch - La Tropa Canina.
+            </p>
+            <p class="text-muted x-small">Zapopan, Jalisco, México 🐾</p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
+
+    <a href="https://wa.me/523325131513?text=¡Hola!%20Tengo%20una%20duda%20sobre%20los%20snacks%20de%20Wuf%20%26%20Munch%20🐾" 
+        class="whatsapp-float" 
+        target="_blank">
+        <i class="bi bi-whatsapp"></i>
+    </a>
     
 </body>
 </html>
